@@ -10,7 +10,7 @@ import { makePaymentRequest } from "@/api/payment";
 export default function Page() {
   const { items, removeAll } = useCart();
 
-  const prices = items.map((product) => product.attributes.price);
+  const prices = items.map((product) => product.price);
   const totalPrice = prices.reduce((total, price) => total + price, 0);
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""

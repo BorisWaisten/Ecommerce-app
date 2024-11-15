@@ -28,20 +28,20 @@ const LovedItemProduct = (props: LovedItemProductProps) => {
 
     return (
         <li className="flex p-6 border-b">
-            <ProductImageMinuature slug={product.attributes.slug} url={product.attributes.images.data[0].attributes.url} />
+            <ProductImageMinuature slug={product.slug} url={product.images[0].url} />
 
             <div className="flex justify-between flex-1 px-6">
                 <div>
-                    <h2 className="text-lg font-bold">{product.attributes.productName}</h2>
-                    <p className="font-bold">{formatPrice(product.attributes.price)}</p>
+                    <h2 className="text-lg font-bold">{product.productName}</h2>
+                    <p className="font-bold">{formatPrice(product.price)}</p>
 
-                    <ProductTasteOrigin origin={product.attributes.origin} taste={product.attributes.origin} />
+                    <ProductTasteOrigin origin={product.origin} taste={product.origin} />
 
                     <Button className="mt-5 rounded-full" onClick={addToCheckout}>Añadir al carrito</Button>
                 </div>
                 <div>
-                    <button className={cn("rounded-full flex items-center justify-center bg-white border shadow-md p-1 hover:scale-110 transition")}>
-                        <X size={20} onClick={() => removeLovedItem(product.id)} />
+                    <button className={cn("rounded-full flex items-center justify-center  border shadow-md p-1 hover:scale-110 transition")}>
+                        <X  size={20} onClick={() => removeLovedItem(product.id)} />
                     </button>
                 </div>
             </div>

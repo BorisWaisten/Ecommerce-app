@@ -7,7 +7,6 @@ import { CategoryType } from "@/types/category";
 
 const ChooseCategory = () => {
   const { result, loading }: ResponseType = useGetCategories();
-  console.log(result);
   
 
   return (

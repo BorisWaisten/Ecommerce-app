@@ -22,8 +22,6 @@ const FeaturedProducts = () => {
   const { result, loading }: ResponseType = useGetFeaturedProducts();
   const router = useRouter();
   const { addItem } = useCart();
-
-  console.log(result);
   
 
   return (

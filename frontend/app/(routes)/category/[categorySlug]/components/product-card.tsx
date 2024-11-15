@@ -23,7 +23,7 @@ const ProductCard = (props: ProductCardProps) => {
 
   return (
     <Link
-      href={`/product/${product.attributes.slug}`}
+      href={`/product/${product.slug}`}
       className="relative p-2 transition-all duration-100 rounded-lg hover:shadow-md"
     >
       <div className="absolute flex items-center justify-between gap-3 px-2 z-[1] top-4">
@@ -31,13 +31,13 @@ const ProductCard = (props: ProductCardProps) => {
           className="px-2 py-1 text-xs text-white bg-black rounded-full
                  dark:bg-white dark:text-black w-fit"
         >
-          {product.attributes.taste}
+          {product.taste}
         </p>
         <p
           className="px-2 py-1 text-xs text-white bg-yellow-900 rounded-full
                  w-fit"
         >
-          {product.attributes.origin}
+          {product.origin}
         </p>
       </div>
       <Carousel
@@ -47,10 +47,10 @@ const ProductCard = (props: ProductCardProps) => {
         className="w-full max-w-sm"
       >
         <CarouselContent>
-          {product.attributes.images.data.map((image) => (
+          {product.images.map((image) => (
             <CarouselItem key={image.id} className="group">
               <img
-                src={`${image.attributes.url}`}
+                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${image.url}`}
                 alt="Image"
                 className="rounded-xl"
               />
@@ -61,7 +61,7 @@ const ProductCard = (props: ProductCardProps) => {
                 <div className="flex justify-center gap-x-6">
                   <IconButton
                     onClick={() =>
-                      router.push(`/product/${product.attributes.slug}`)
+                      router.push(`/product/${product.slug}`)
                     }
                     icon={<Expand size={20} className="text-gray-600" />}
                   />
@@ -75,9 +75,9 @@ const ProductCard = (props: ProductCardProps) => {
           ))}
         </CarouselContent>
       </Carousel>
-      <p className="text-2xl text-center">{product.attributes.productName}</p>
+      <p className="text-2xl text-center">{product.productName}</p>
       <p className="font-bold text-center">
-        {formatPrice(product.attributes.price)}
+        {formatPrice(product.price)}
       </p>
     </Link>
   );
