@@ -31,7 +31,7 @@ const Footer = () => {
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <p>
                         <span className="font-bold">
-                            TarreDev
+                            App
                         </span>
                         E-commerce
                     </p>
@@ -48,7 +48,7 @@ const Footer = () => {
 
                 <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
                     &copy; 2024
-                    <Link href="#">TarreDev.</Link>
+                    <Link href="#">AppEcommerce.</Link>
                     Todos los derechos reservados
                 </span>
             </div>

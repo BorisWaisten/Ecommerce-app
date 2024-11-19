@@ -31,10 +31,10 @@ const MenuList = () => {
                                     >
 
                                         <div className="mb-2 mt-4 text-lg font-medium">
-                                            TarreDev
+                                            AppEcommerce
                                         </div>
                                         <p className="text-sm leading-tight text-muted-foreground">
-                                            Sumérgete en el apasionante mundo del café con nuestra web especializada en la venta de granos de café de alta calidad, molidos y en cápsulas.
+                                            Modelo de aplicacion de comercio
                                         </p>
                                     </a>
                                 </NavigationMenuLink>
@@ -46,13 +46,13 @@ const MenuList = () => {
                                 Sección dedicada a promociones y descuentos especiales
                             </ListItem>
                             <ListItem href="/" title="Accesorios">
-                                Productos complementarios como tazas, molinillos, prensas, etc.
+                                Item de accesorios
                             </ListItem>
                         </ul>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger>Cafés</NavigationMenuTrigger>
+                    <NavigationMenuTrigger>Productos</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                             {components.map((component) => (
@@ -83,22 +83,22 @@ export default MenuList
 
 const components: { title: string; href: string; description: string }[] = [
     {
-        title: "Café grano",
-        href: "/category/grano",
+        title: "Categoria 1",
+        href: "/category/category-1",
         description:
-            "Granos de café enteros que requieren ser molidos antes de su preparación. Ideal para los amantes del café que aprecian la frescura y la calidad",
+            "descripcion de la categoria 1",
     },
     {
-        title: "Café molido",
-        href: "/category/molido",
+        title: "Categoria 2",
+        href: "/category/category-2",
         description:
-            "Café en forma de polvo listo para ser utilizado en diferentes métodos de preparación, como la cafetera de filtro o la prensa francesa",
+        "descripcion de la categoria 2",
     },
     {
-        title: "Café de cápsula",
-        href: "/category/capsula",
+        title: "Categoria 3",
+        href: "/category/category-3",
         description:
-            "Café envasado en cápsulas individuales, ofreciendo conveniencia y consistencia en la preparación",
+        "descripcion de la categoria 3",
     },
 ]
 

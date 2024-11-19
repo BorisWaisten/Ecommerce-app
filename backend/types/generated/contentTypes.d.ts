@@ -429,13 +429,13 @@ export interface ApiProductoProducto extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     origin: Schema.Attribute.Enumeration<
-      ['Africa', 'Asia', 'America', 'Europa']
+      ['origin1', 'origin2', 'origin3', 'origin4']
     >;
     price: Schema.Attribute.Decimal;
     productName: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'productName'>;
-    taste: Schema.Attribute.Enumeration<['sweet', 'citric']>;
+    taste: Schema.Attribute.Enumeration<['taste1', 'taste2']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

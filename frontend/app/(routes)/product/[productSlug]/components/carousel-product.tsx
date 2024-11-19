@@ -9,13 +9,9 @@ import {
 
 interface CarouselProductProps {
   images: {
-    data: {
-      id: number;
-      attributes: {
-        url: string;
-      };
-    }[];
-  };
+    id: number;
+    url: string;
+  }[];
 }
 
 const CarouselProduct = (props: CarouselProductProps) => {
