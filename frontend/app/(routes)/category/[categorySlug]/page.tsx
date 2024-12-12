@@ -10,24 +10,23 @@ import { ProductType } from "@/types/product";
 import { useState } from "react";
 
 export default function Page() {
-  const params = useParams();
-  const { categorySlug } = params;
-  const { result, loading }: ResponseType = useGetCategoryProduct(categorySlug);
-  const [filterOrigin, setFilterOrigin] = useState("");
-  const router = useRouter();
+  // const params = useParams();
+  // const { categorySlug } = params;
+  // //const { result, loading }: ResponseType = useGetCategoryProduct(categorySlug);
+  // const [filterOrigin, setFilterOrigin] = useState("");
 
-  const filteredProducts =
-    result !== null &&
-    !loading &&
-    (filterOrigin === ""
-      ? result
-      : result.filter(
-          (product: ProductType) => product.origin === filterOrigin
-        ));
+  // const filteredProducts =
+  //   result !== null &&
+  //   !loading &&
+  //   (filterOrigin === ""
+  //     ? result
+  //     : result.filter(
+  //         (product: ProductType) => product.origin === filterOrigin
+  //       ));
 
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
-      {result !== null && !loading && result.length !== 0 && (
+      {/* {result !== null && !loading && result.length !== 0 && (
         <h1 className="text-3xl font-medium">
           Café {result[0].category.categoryName}
         </h1>
@@ -50,7 +49,8 @@ export default function Page() {
               <p>No hay productos con este filtro.</p>
             )}
         </div>
-      </div>
+      </div> */}
+      Category filter
     </div>
   );
 }
