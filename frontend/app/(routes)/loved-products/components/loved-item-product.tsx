@@ -28,14 +28,14 @@ const LovedItemProduct = (props: LovedItemProductProps) => {
 
     return (
         <li className="flex p-6 border-b">
-            <ProductImageMinuature slug={product.slug} url={product.images[0].url} />
+            <ProductImageMinuature slug="slug" url={product.image} />
 
             <div className="flex justify-between flex-1 px-6">
                 <div>
-                    <h2 className="text-lg font-bold">{product.productName}</h2>
+                    <h2 className="text-lg font-bold">{product.name}</h2>
                     <p className="font-bold">{formatPrice(product.price)}</p>
 
-                    <ProductTasteOrigin origin={product.origin} taste={product.origin} />
+                    <ProductTasteOrigin origin="origin" taste="taste" />
 
                     <Button className="mt-5 rounded-full" onClick={addToCheckout}>Añadir al carrito</Button>
                 </div>
