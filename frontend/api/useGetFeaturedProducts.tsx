@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 
 export function useGetFeaturedProducts() {
     const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`
-    
     const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")

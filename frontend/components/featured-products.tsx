@@ -17,9 +17,10 @@ import { Expand, ShoppingCart } from "lucide-react";
 import IconButton from "./icon-button";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/use-cart";
+import { useGetProducts } from "@/api/getProducts";
 
 const FeaturedProducts = () => {
-  const { result, loading }: ResponseType = useGetFeaturedProducts();
+  const { result, loading }: ResponseType = useGetProducts()
   const router = useRouter();
   const { addItem } = useCart();
   
