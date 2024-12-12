@@ -19,11 +19,11 @@ const InfoProduct = (props: InfoProductProps) => {
   return (
     <div className="px-6">
       <div className="justify-between mb-3 sm:flex">
-        <h1 className="text-2xl">{product.productName}</h1>
+        <h1 className="text-2xl">{product.name}</h1>
 
         <ProductTasteOrigin
-          origin={product.origin}
-          taste={product.taste}
+          origin="##"
+          taste="##"
         />
       </div>
       <Separator className="my-4" />

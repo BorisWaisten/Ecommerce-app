@@ -8,10 +8,7 @@ import {
 } from "@/components/ui/carousel";
 
 interface CarouselProductProps {
-  images: {
-    id: number;
-    url: string;
-  }[];
+  images:string ; 
 }
 
 const CarouselProduct = (props: CarouselProductProps) => {
@@ -21,15 +18,13 @@ const CarouselProduct = (props: CarouselProductProps) => {
     <div className="sm:px-16">
       <Carousel>
         <CarouselContent>
-          {images.map((image) => (
-            <CarouselItem key={image.id}>
+            <CarouselItem key="1">
               <img
-                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${image.url}`}
+                src={images}
                 alt="Image product"
                 className="rounded-lg"
               />
             </CarouselItem>
-          ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
