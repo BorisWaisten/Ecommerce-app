@@ -16,14 +16,14 @@ const CartItem = (props: CartItemProps) => {
 
     return (
         <li className="flex py-6 border-b">
-            <ProductImageMinuature slug={product.slug} url={product.images[0].url} />
+            <ProductImageMinuature slug="slug" url={product.image} />
 
             <div className="flex justify-between flex-1 px-6">
                 <div>
-                    <h2 className="text-lg font-bold">{product.productName}</h2>
+                    <h2 className="text-lg font-bold">{product.name}</h2>
                     <p className="font-bold">{formatPrice(product.price)}</p>
 
-                    <ProductTasteOrigin taste={product.taste} origin={product.origin} />
+                    <ProductTasteOrigin taste="taste" origin="origin" />
 
                 </div>
                 <div>

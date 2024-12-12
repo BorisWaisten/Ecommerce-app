@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 export function useGetFeaturedProducts() {
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/productos?filters[isFeatured][$eq]=true&populate=*`
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`
     
     const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -12,7 +12,7 @@ export function useGetFeaturedProducts() {
             try {
                 const res = await fetch(url);
                 const json = await res.json()
-                setResult(json.data)
+                setResult(json)
                 setLoading(false)
             } catch (error: any) {
                 setError(error)

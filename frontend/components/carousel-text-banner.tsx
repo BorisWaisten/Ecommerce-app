@@ -14,7 +14,7 @@ export const dataCarouselTop = [
     {
         id: 2,
         title: "Consigue hasta un -25% en compras superiores a 40€",
-        description: "−20 % al gastar 100 € o −25 % al gastar 150 €. Usa el código TARREDEV.",
+        description: "−20 % al gastar 100 € o −25 % al gastar 150 €. Usa el código APPECO.",
         link: "#",
     },
     {

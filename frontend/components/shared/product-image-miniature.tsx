@@ -12,11 +12,11 @@ const ProductImageMinuature = (props: ProductImageMiniatureProps) => {
 
   return (
     <div
-      onClick={() => router.push(`/product/${slug}`)}
+      onClick={() => router.push(`/`)}
       className="cursor-pointer"
     >
       <img
-        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`}
+        src={url}
         alt="Product"
         className="w-24 h-24 overflow-hidden rounded-md sm:w-auto sm:h-32"
       />
