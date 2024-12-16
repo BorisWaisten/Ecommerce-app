@@ -1,32 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useGetProducts } from "@/api/getProducts";
 import Link from "next/link";
 import { ResponseType } from "@/types/response";
 import { CategoryType } from "@/types/category";
+import { useGetCategoryProduct } from "@/api/getCategoryProduct";
 
 
 const Chooseproduct = () => {
-  const { result, loading }: ResponseType = useGetProducts();
-
-  const categories = [
-    {
-      id:1,
-      categoryName:"Remeras",
-      mainImage:{url:"./DEVWAISTEN.png"}
-    },
-    {
-      id:2,
-      categoryName:"Pantalones",
-      mainImage:{url:"./DEVWAISTEN.png"}
-    }
-    ,
-    {
-      id:3,
-      categoryName:"Busos",
-      mainImage:{url:"./DEVWAISTEN.png"}
-    }
-  ]
+  const { result, loading }: ResponseType = useGetCategoryProduct();
     
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
@@ -36,8 +17,8 @@ const Chooseproduct = () => {
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {!loading &&
-          categories !== null &&
-          categories.map((category: CategoryType) => (
+          result !== null &&
+          result.map((category: CategoryType) => (
             <Link
               key={category.id}
               href={`/`}
