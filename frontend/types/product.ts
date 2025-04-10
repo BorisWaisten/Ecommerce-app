@@ -3,7 +3,9 @@ export type ProductType = {
   name: string;
   description: string;
   price: number;
-  image:string,
+  image: string;
   category: string;
-  stock:number;
+  stock: number;
+  origin?: string; // Propiedad opcional
+  productCategory?: string;
 };
