@@ -7,15 +7,16 @@ import { ProductType } from "@/types/product"
 interface CartStore {
     items: ProductType[],
     addItem: (data: ProductType) => void
-    removeItem: (id: number) => void
+    removeItem: (_id: number) => void
     removeAll: () => void
 }
 
 export const useCart = create(persist<CartStore>((set, get) => ({
     items: [],
     addItem: (data: ProductType) => {
+       
         const currentItems = get().items
-        const existingItem = currentItems.find((item) => item.id === data.id)
+        const existingItem = currentItems.find((item) => item._id === data._id)
 
         if (existingItem) {
             return toast({
@@ -31,8 +32,8 @@ export const useCart = create(persist<CartStore>((set, get) => ({
             title: "Producto añadido al carrito 🛍️"
         })
     },
-    removeItem: (id: number) => {
-        set({ items: [...get().items.filter((item) => item.id !== id)] })
+    removeItem: (_id: number) => {
+        set({ items: [...get().items.filter((item) => item._id !== _id)] })
         toast({
             title: "Producto eliminado del carrito 🗑️"
         })

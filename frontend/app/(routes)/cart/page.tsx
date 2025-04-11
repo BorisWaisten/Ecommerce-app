@@ -40,7 +40,7 @@ export default function Page() {
           {items.length === 0 && <p>No hay productos en el carrito</p>}
           <ul>
             {items.map((item) => (
-              <CartItem key={item.id} product={item} />
+              <CartItem key={item._id} product={item} />
             ))}
           </ul>
         </div>

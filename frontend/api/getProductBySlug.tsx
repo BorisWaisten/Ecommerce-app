@@ -10,9 +10,9 @@ export function useGetProductBySlug(slug: string | string[]) {
     useEffect(() => {
         (async () => {
             try {
-                const res = await fetch(url)
-                const json = await res.json()
-                setResult(json.data)
+                const res = await fetch(url)               
+                const json = await res.json()                
+                setResult(json)
                 setLoading(false)
             } catch (error: any) {
                 setError(error)

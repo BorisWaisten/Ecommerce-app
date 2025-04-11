@@ -17,7 +17,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <Link
-      href={`/product/${product.id}`}
+      href={`/product/${product._id}`}
       className="relative p-2 transition-all duration-100 rounded-lg hover:shadow-md"
     >
 
@@ -35,7 +35,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div className="absolute w-full px-6 transition duration-200 opacity-0 hover:opacity-100 bottom-5">
         <div className="flex justify-center gap-x-6">
           <IconButton
-            onClick={() => router.push(`/product/${product.id}`)}
+            onClick={() => router.push(`/product/${product._id}`)}
             icon={<Expand size={20} className="text-gray-600" />}
           />
           <IconButton

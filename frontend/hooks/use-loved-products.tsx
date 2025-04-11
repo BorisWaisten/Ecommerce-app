@@ -6,14 +6,14 @@ import { toast } from '@/components/ui/use-toast'
 interface UseLovedProductsType {
     lovedItems: ProductType[],
     addLoveItem: (data: ProductType) => void
-    removeLovedItem: (id: number) => void
+    removeLovedItem: (_id: number) => void
 }
 
 export const useLovedProducts = create(persist<UseLovedProductsType>((set, get) => ({
     lovedItems: [],
     addLoveItem: (data: ProductType) => {
         const currentLovedItems = get().lovedItems;
-        const existingItem = currentLovedItems.find((item) => item.id === data.id)
+        const existingItem = currentLovedItems.find((item) => item._id === data._id)
 
         if (existingItem) {
             return toast({
@@ -29,8 +29,8 @@ export const useLovedProducts = create(persist<UseLovedProductsType>((set, get) 
             title: " Producto añadido a la lista 🧡"
         })
     },
-    removeLovedItem: (id: number) => {
-        set({ lovedItems: [...get().lovedItems.filter((item) => item.id !== id)] })
+    removeLovedItem: (_id: number) => {
+        set({ lovedItems: [...get().lovedItems.filter((item) => item._id !== _id)] })
         toast({
             title: "Producto se ha eliminado de la lista ❤️‍🔥"
         })

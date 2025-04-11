@@ -11,6 +11,7 @@ export function useGetProducts() {
             try {
                 const res = await fetch(url)
                 const json = await res.json()
+                localStorage.setItem('products', JSON.stringify(json))
                 setResult(json)
                 setLoading(false)
             } catch (error: any) {

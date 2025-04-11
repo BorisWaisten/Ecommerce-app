@@ -23,7 +23,7 @@ const LovedItemProduct = (props: LovedItemProductProps) => {
 
     const addToCheckout = () => {
         addItem(product)
-        removeLovedItem(product.id)
+        removeLovedItem(product._id)
     }
 
     return (
@@ -41,7 +41,7 @@ const LovedItemProduct = (props: LovedItemProductProps) => {
                 </div>
                 <div>
                     <button className={cn("rounded-full flex items-center justify-center  border shadow-md p-1 hover:scale-110 transition")}>
-                        <X  size={20} onClick={() => removeLovedItem(product.id)} />
+                        <X  size={20} onClick={() => removeLovedItem(product._id)} />
                     </button>
                 </div>
             </div>
