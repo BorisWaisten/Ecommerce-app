@@ -34,11 +34,11 @@ const FeaturedProducts = () => {
           {loading && <SkeletonSchema grid={3} />}
           {result !== null &&
             result.map((product: ProductType) => {
-              const { image, name,id } = product;
+              const { image, name,_id } = product;
 
               return (
                 <CarouselItem
-                  key={id}
+                  key={_id}
                   className="md:basis-1/2 lg:basis-1/3 group"
                 >
                   <div className="p-1">

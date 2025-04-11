@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { ResponseType } from "@/types/response";
 import { CategoryType } from "@/types/category";
-import { useGetCategoryProduct } from "@/api/getCategoryProduct";
-
+import { useGetCategories } from "@/api/getCategories";
 
 const Chooseproduct = () => {
-  const { result, loading }: ResponseType = useGetCategoryProduct();
+  const { result, loading,error }: ResponseType = useGetCategories();
     
   return (
     <div className="max-w-6xl py-4 mx-auto sm:py-16 sm:px-24">
@@ -21,7 +20,7 @@ const Chooseproduct = () => {
           result.map((category: CategoryType) => (
             <Link
               key={category.id}
-              href={`/`}
+              href={`/category/${category.slug}`}
               className="relative max-w-xs mx-auto overflow-hidden bg-no-repeat bg-cover rounded-lg"
             >
               <img

@@ -11,7 +11,7 @@ const PageCategory = () => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   
 
-  const { result: products, loading, error } = useGetCategoryProduct(categorySlug);
+  const { result: products = [], loading, error } = useGetCategoryProduct(categorySlug);
 
 
   return (
@@ -24,9 +24,9 @@ const PageCategory = () => {
           <Separator />
           <div className="sm:flex sm:justify-between">
             <div className="grid gap-5 mt-8 sm:grid-cols-2 md:grid-cols-3 md:gap-10">
-              {products?.length > 0 ? (
+              {products && products?.length > 0 ? (
                 products?.map((product: any) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard key={product._id} product={product} />
                 ))
               ) : (
                 <p>No hay productos en esta categoría.</p>
