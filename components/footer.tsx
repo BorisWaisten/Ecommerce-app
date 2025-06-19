@@ -1,56 +1,72 @@
 import Link from "next/link";
-import { Separator } from "./ui/separator";
+import { Instagram, Mail, Phone } from "lucide-react";
+import Image from "next/image";
 
-const dataFooter = [
+const socialLinks = [
     {
         id: 1,
-        name: "Sobre nosotros",
-        link: "#"
+        name: "Instagram",
+        link: "https://instagram.com/waistenprogramacion",
+        icon: Instagram,
+        username: "@waistenprogramacion"
     },
     {
         id: 2,
-        name: "Productos",
-        link: "#"
+        name: "WhatsApp",
+        link: "https://wa.me/5493446575620",
+        icon: Phone,
+        username: "+54 9 3446 57-5620"
     },
     {
         id: 3,
-        name: "Mi cuenta",
-        link: "#"
-    },
-    {
-        id: 4,
-        name: "Política de privacidad",
-        link: "#"
-    },
-]
+        name: "Email",
+        link: "mailto:boriswaisten@gmail.com",
+        icon: Mail,
+        username: "boriswaisten@gmail.com"
+    }
+];
 
 const Footer = () => {
     return (
-        <footer className="mt-4">
-            <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-                <div className="sm:flex sm:items-center sm:justify-between">
-                    <p>
-                        <span className="font-bold">
-                            App
-                        </span>
-                        E-commerce
-                    </p>
+        <footer className="bg-[#1a2332] text-gray-300">
+            <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                    {/* Logo y descripción */}
+                    <div className="space-y-4">
+                        <Image 
+                            src="/logoWaisten.svg"
+                            alt="WaistenProgramación"
+                            width={200}
+                            height={200}
+                            className="rounded-full "
+                        />
+                        <p className="text-gray-400 text-sm max-w-md">
+                            Desarrollo de software profesional y soluciones tecnológicas innovadoras.
+                        </p>
+                    </div>
 
-                    <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-                        {dataFooter.map((data) => (
-                            <li key={data.id}>
-                                <Link href={data.link} className="hover:underline me-4 md:me-6">{data.name}</Link>
-                            </li>
-                        ))}
-                    </ul>
+                    {/* Contacto */}
+                    <div className="space-y-8">
+                        <h3 className="text-xl font-semibold text-white mb-6">
+                            CONTACTO
+                        </h3>
+                        <ul className="space-y-6">
+                            {socialLinks.map((social) => (
+                                <li key={social.id}>
+                                    <Link 
+                                        href={social.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center text-gray-400 hover:text-white transition-colors"
+                                    >
+                                        <social.icon className="h-5 w-5 mr-3" />
+                                        <span className="text-base">{social.username}</span>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
-                <Separator className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-
-                <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                    &copy; 2024
-                    <Link href="#">AppEcommerce.</Link>
-                    Todos los derechos reservados
-                </span>
             </div>
         </footer>
     );
