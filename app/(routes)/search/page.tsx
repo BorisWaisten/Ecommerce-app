@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Search, X } from 'lucide-react';
 import { useSearch } from '@/hooks/use-search';
@@ -10,8 +10,9 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import Image from 'next/image';
 
-const SearchPage = () => {
+const SearchContent = () => {
     const searchParams = useSearchParams();
     const query = searchParams.get('q') || '';
     const [searchTerm, setSearchTerm] = useState(query);
@@ -95,9 +96,11 @@ const SearchPage = () => {
                                 {filteredProducts.map((product) => (
                                     <Card key={product._id} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group">
                                         <div className="relative">
-                                            <img
+                                            <Image
                                                 src={product.image}
                                                 alt={product.name}
+                                                width={400}
+                                                height={192}
                                                 className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                                             />
                                             {product.stock === 0 && (
@@ -133,7 +136,7 @@ const SearchPage = () => {
                                 No se encontraron productos
                             </h3>
                             <p className="text-gray-600 dark:text-gray-400 mb-6">
-                                No hay productos que coincidan con "{query}"
+                                No hay productos que coincidan con &quot;{query}&quot;
                             </p>
                             <div className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
                                 <p>Intenta con:</p>
@@ -158,6 +161,25 @@ const SearchPage = () => {
                 </div>
             </div>
         </div>
+    );
+};
+
+const SearchPage = () => {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-20">
+                <div className="container mx-auto px-4 py-8">
+                    <div className="flex justify-center items-center h-64">
+                        <div className="text-center">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                            <p className="text-gray-600 dark:text-gray-400">Cargando búsqueda...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }>
+            <SearchContent />
+        </Suspense>
     );
 };
 

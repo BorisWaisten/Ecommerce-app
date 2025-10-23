@@ -7,6 +7,7 @@ import { ProductType } from '@/types/product';
 import { formatPrice } from '@/lib/formatPrice';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import Image from 'next/image';
 
 interface SearchBarProps {
     isScrolled: boolean;
@@ -127,9 +128,11 @@ const SearchBar = ({ isScrolled }: SearchBarProps) => {
                                             onClick={() => handleProductClick(product)}
                                         >
                                             <div className="relative">
-                                                <img
+                                                <Image
                                                     src={product.image}
                                                     alt={product.name}
+                                                    width={48}
+                                                    height={48}
                                                     className="w-12 h-12 object-cover rounded-lg mr-3 group-hover:scale-105 transition-transform duration-200"
                                                 />
                                                 {product.stock === 0 && (

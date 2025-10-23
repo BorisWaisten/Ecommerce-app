@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { AuthForm } from "@/components/auth/auth-form";
 
 export default function AuthPage() {
@@ -13,7 +14,9 @@ export default function AuthPage() {
           </p>
         </div>
         
-        <AuthForm />
+        <Suspense fallback={<div className="flex justify-center items-center h-64">Cargando...</div>}>
+          <AuthForm />
+        </Suspense>
       </div>
     </div>
   );
