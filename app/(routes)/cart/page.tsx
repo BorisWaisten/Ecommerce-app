@@ -2,36 +2,89 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/hooks/use-cart";
+import { useAuth } from "@/hooks/use-auth";
 import { formatPrice } from "@/lib/formatPrice";
 import CartItem from "./components/cart-item";
-import { loadStripe } from "@stripe/stripe-js";
 import { makePaymentRequest } from "@/api/payment";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, CreditCard, ArrowLeft } from "lucide-react";
+import { ShoppingBag, CreditCard, ArrowLeft, LogIn } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "@/components/ui/use-toast";
 
 export default function Page() {
   const { items, removeAll } = useCart();
+  const { isAuthenticated, token } = useAuth();
   const router = useRouter();
 
   const prices = items.map((product) => product.price);
   const totalPrice = prices.reduce((total, price) => total + price, 0);
-  const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
-  );
 
-  const buyStripe = async () => {
+  const processPayment = async () => {
+    // Verificar autenticación
+    if (!isAuthenticated) {
+      toast({
+        title: "Inicia sesión para continuar",
+        description: "Necesitas estar autenticado para realizar el pago",
+        variant: "destructive",
+      });
+      router.push("/auth?redirect=/cart");
+      return;
+    }
+
+    // Verificar que hay productos en el carrito
+    if (items.length === 0) {
+      toast({
+        title: "Carrito vacío",
+        description: "Agrega productos antes de proceder al pago",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
-      const stripe = await stripePromise;
+      // Crear orden
       const res = await makePaymentRequest.post("/api/orders", {
         products: items,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
-      await stripe?.redirectToCheckout({
-        sessionId: res.data.stripeSession.id,
+
+      // Mostrar mensaje de éxito
+      toast({
+        title: "¡Orden creada exitosamente!",
+        description: "Tu pago ha sido procesado",
       });
+
+      // Limpiar carrito
       removeAll();
-    } catch (error) {
-      console.log(error);
+
+      // Redirigir a página de éxito
+      if (res.data.paymentUrl) {
+        router.push(res.data.paymentUrl);
+      } else {
+        router.push("/success");
+      }
+      
+    } catch (error: any) {
+      console.error('Error al procesar el pago:', error);
+      
+      if (error.response?.status === 401) {
+        toast({
+          title: "Sesión expirada",
+          description: "Por favor, inicia sesión nuevamente",
+          variant: "destructive",
+        });
+        router.push("/auth?redirect=/cart");
+      } else {
+        toast({
+          title: "Error al procesar el pago",
+          description: error.response?.data?.error || "Intenta nuevamente",
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -125,13 +178,23 @@ export default function Page() {
                     </span>
                   </div>
 
-                  <Button
-                    onClick={buyStripe}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 rounded-xl flex items-center justify-center gap-2"
-                  >
-                    <CreditCard size={20} />
-                    Proceder al pago
-                  </Button>
+                  {!isAuthenticated ? (
+                    <Button
+                      onClick={() => router.push("/auth?redirect=/cart")}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 rounded-xl flex items-center justify-center gap-2"
+                    >
+                      <LogIn size={20} />
+                      Iniciar sesión para pagar
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={processPayment}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 rounded-xl flex items-center justify-center gap-2"
+                    >
+                      <CreditCard size={20} />
+                      Finalizar Compra
+                    </Button>
+                  )}
 
                   <button
                     onClick={() => router.push("/")}
