@@ -104,14 +104,18 @@ export default function Chooseproduct() {
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <motion.img
-                    src={category.mainImage.url}
-                    alt={category.categoryName}
-                    className="w-full h-64 object-cover transition duration-500"
+                  <motion.div
+                    className="w-full h-64 overflow-hidden"
                     initial={{ scale: 1.1, opacity: 0 }}
                     whileInView={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.5 + index * 0.1 }}
-                  />
+                  >
+                    <img
+                      src={category.mainImage.url}
+                      alt={category.categoryName}
+                      className="w-full h-full object-cover transition duration-500"
+                    />
+                  </motion.div>
                   
                   {/* Overlay gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

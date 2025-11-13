@@ -99,7 +99,7 @@ export default function FeaturedProducts() {
           }}
         >
           <CarouselContent className="-ml-2 md:-ml-4">
-            {loading ? (
+            {loading && (!result || result.length === 0) ? (
               // Loading skeleton
               Array.from({ length: 3 }).map((_, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
@@ -114,8 +114,8 @@ export default function FeaturedProducts() {
                   </div>
                 </CarouselItem>
               ))
-            ) : error ? (
-              // Error state
+            ) : error && (!result || result.length === 0) ? (
+              // Error state - solo mostrar si no hay datos en cache
               <CarouselItem className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-2">
                   <Card className="overflow-hidden">
@@ -169,13 +169,10 @@ export default function FeaturedProducts() {
                     >
                       {/* Imagen del producto */}
                       <div className="relative aspect-square overflow-hidden">
-                        <motion.img
+                        <img
                           src={product.image}
                           alt={product.name}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.6, delay: index * 0.1 }}
                         />
                         
                         {/* Overlay con gradiente */}

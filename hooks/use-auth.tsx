@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { toast } from '@/components/ui/use-toast';
 import { UserType, LoginData, RegisterData, UpdateProfileData } from '@/types/user';
+import { getBackendUrl } from "@/lib/utils";
 
 interface AuthStore {
   user: UserType | null;
@@ -20,8 +21,6 @@ interface AuthStore {
   setHydrated: (hydrated: boolean) => void;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
-
 export const useAuth = create<AuthStore>()(
   persist(
     (set, get) => ({
@@ -38,7 +37,7 @@ export const useAuth = create<AuthStore>()(
         try {
           set({ isLoading: true });
           
-          const response = await fetch(`${API_URL}/api/users/login`, {
+          const response = await fetch(getBackendUrl('/api/users/login'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -110,7 +109,7 @@ export const useAuth = create<AuthStore>()(
         try {
           set({ isLoading: true });
           
-          const response = await fetch(`${API_URL}/api/users/register`, {
+          const response = await fetch(getBackendUrl('/api/users/register'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -201,7 +200,7 @@ export const useAuth = create<AuthStore>()(
             throw new Error('No hay token de autenticación');
           }
 
-          const response = await fetch(`${API_URL}/api/users/profile`, {
+          const response = await fetch(getBackendUrl('/api/users/profile'), {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -268,7 +267,7 @@ export const useAuth = create<AuthStore>()(
             throw new Error('No hay token de autenticación');
           }
 
-          const response = await fetch(`${API_URL}/api/users/account`, {
+          const response = await fetch(getBackendUrl('/api/users/account'), {
             method: 'DELETE',
             headers: {
               'Authorization': `Bearer ${token}`,

@@ -1,5 +1,6 @@
 import axios from "axios";
+import { getBackendUrl } from "@/lib/utils";
 
 export const makePaymentRequest = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  baseURL: getBackendUrl(''),
 });

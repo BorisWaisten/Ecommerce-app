@@ -1,13 +1,24 @@
+import dynamic from "next/dynamic";
 import BannerDiscount from "@/components/banner-discount";
 import BannerProduct from "@/components/banner-product";
 import CarouselTextBanner from "@/components/carousel-text-banner";
-import ChooseCategory from "@/components/choose-category";
-import FeaturedProducts from "@/components/featured-products";
 import HeroModern from "@/components/hero-modern";
-import TrendingProducts from "@/components/trending-products";
 import BrandSection from "@/components/brand-section";
 import StatsSection from "@/components/stats-section";
 import NewsletterSection from "@/components/newsletter-section";
+
+// Deshabilitar SSR para componentes con Framer Motion para evitar errores de hidratación
+const FeaturedProducts = dynamic(() => import("@/components/featured-products"), {
+  ssr: false,
+});
+
+const TrendingProducts = dynamic(() => import("@/components/trending-products"), {
+  ssr: false,
+});
+
+const ChooseCategory = dynamic(() => import("@/components/choose-category"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (

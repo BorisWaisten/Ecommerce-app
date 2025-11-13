@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-
+import { getBackendUrl } from '@/lib/utils'
 
 export function useGetProductBySlug(slug: string | string[]) {
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products/${slug}`
+    const url = getBackendUrl(`/api/products/${slug}`)
     const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')

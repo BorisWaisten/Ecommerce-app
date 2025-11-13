@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { ProductType } from '@/types/product';
+import { getBackendUrl } from '@/lib/utils';
 
 export function useSearch() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -18,7 +19,7 @@ export function useSearch() {
                     setProducts(parsedProducts);
                 } else {
                     // Si no hay productos en cache, cargar desde API
-                    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`);
+                    const response = await fetch(getBackendUrl('/api/products'));
                     const data = await response.json();
                     setProducts(data);
                     localStorage.setItem('products', JSON.stringify(data));

@@ -126,14 +126,18 @@ export default function TrendingProducts() {
                   <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
                     <CardContent className="p-0">
                       <div className="relative overflow-hidden">
-                        <motion.img
-                          src={image}
-                          alt={name}
-                          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                        <motion.div
                           initial={{ scale: 1.1 }}
                           whileInView={{ scale: 1 }}
                           transition={{ duration: 0.8 }}
-                        />
+                          className="w-full h-48"
+                        >
+                          <img
+                            src={image}
+                            alt={name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        </motion.div>
                         
                         {/* Overlay con botones */}
                         <motion.div

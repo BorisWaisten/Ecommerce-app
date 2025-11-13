@@ -1,21 +1,28 @@
 import { useContext, useEffect, useState, useMemo } from "react"
 import { ProductsContext } from "@/contexts/products-context"
 import { ProductType } from "@/types/product"
+import { getBackendUrl } from "@/lib/utils"
 
 export function useGetProducts() {
     // Siempre llamar a los hooks en el mismo orden
     const context = useContext(ProductsContext)
-    const url = useMemo(() => `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`, [])
+    const url = useMemo(() => getBackendUrl('/api/products'), [])
     const [result, setResult] = useState<ProductType[] | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
 
+    // Si hay contexto, usar los valores del contexto directamente
     useEffect(() => {
-        // Si hay contexto, no hacer fetch (el contexto ya lo maneja)
         if (context) {
             setLoading(context.loading)
             setResult(context.products)
             setError(context.error)
+        }
+    }, [context?.loading, context?.products, context?.error, context])
+
+    useEffect(() => {
+        // Si hay contexto, no hacer fetch (el contexto ya lo maneja)
+        if (context) {
             return
         }
         
@@ -68,7 +75,7 @@ export function useGetProducts() {
         }
     }, [url, context])
 
-    // Si hay contexto, retornar los valores del contexto
+    // Si hay contexto, retornar los valores del contexto directamente
     if (context) {
         return {
             loading: context.loading,

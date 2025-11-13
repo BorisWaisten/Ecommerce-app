@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { ProductType } from "@/types/product";
 import { CategoryType } from "@/types/category";
+import { getBackendUrl } from "@/lib/utils";
 
 interface ProductsContextType {
   products: ProductType[] | null;
@@ -15,29 +16,52 @@ interface ProductsContextType {
 
 export const ProductsContext = createContext<ProductsContextType | undefined>(undefined);
 
+// Función helper para cargar datos del localStorage de forma síncrona
+function getCachedProducts(): ProductType[] | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const cached = localStorage.getItem("products");
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    // Ignorar errores de parseo
+  }
+  return null;
+}
+
+function getCachedCategories(): CategoryType[] | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const cached = localStorage.getItem("categories");
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    // Ignorar errores de parseo
+  }
+  return null;
+}
+
 export function ProductsProvider({ children }: { children: ReactNode }) {
-  const [products, setProducts] = useState<ProductType[] | null>(null);
-  const [categories, setCategories] = useState<CategoryType[] | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Inicializar con datos del cache si están disponibles
+  const [products, setProducts] = useState<ProductType[] | null>(() => getCachedProducts());
+  const [categories, setCategories] = useState<CategoryType[] | null>(() => getCachedCategories());
+  const [loading, setLoading] = useState(() => !getCachedProducts()); // Si hay cache, no mostrar loading
   const [error, setError] = useState("");
 
   const fetchProducts = async () => {
     try {
-      // Primero intentar obtener de localStorage
-      const cachedProducts = localStorage.getItem("products");
-      if (cachedProducts) {
-        try {
-          const parsed = JSON.parse(cachedProducts);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setProducts(parsed);
-          }
-        } catch (e) {
-          // Si hay error parseando, continuar con fetch
-        }
-      }
-
+      setError("");
+      
       // Hacer fetch para obtener datos actualizados
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`;
+      const url = getBackendUrl('/api/products');
       const res = await fetch(url);
 
       if (!res.ok) {
@@ -50,21 +74,17 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
       if (productsArray.length > 0) {
         localStorage.setItem("products", JSON.stringify(productsArray));
         setProducts(productsArray);
+      } else if (productsArray.length === 0 && !products) {
+        // Si no hay productos y no hay cache, establecer array vacío
+        setProducts([]);
       }
     } catch (err: any) {
       setError(err?.message || "Error al cargar productos");
       // Si hay error pero tenemos datos en cache, mantenerlos
       if (!products) {
-        const cachedProducts = localStorage.getItem("products");
+        const cachedProducts = getCachedProducts();
         if (cachedProducts) {
-          try {
-            const parsed = JSON.parse(cachedProducts);
-            if (Array.isArray(parsed)) {
-              setProducts(parsed);
-            }
-          } catch (e) {
-            // Ignorar error de parseo
-          }
+          setProducts(cachedProducts);
         }
       }
     }
@@ -72,21 +92,8 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
 
   const fetchCategories = async () => {
     try {
-      // Primero intentar obtener de localStorage
-      const cachedCategories = localStorage.getItem("categories");
-      if (cachedCategories) {
-        try {
-          const parsed = JSON.parse(cachedCategories);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setCategories(parsed);
-          }
-        } catch (e) {
-          // Si hay error parseando, continuar con fetch
-        }
-      }
-
       // Hacer fetch para obtener datos actualizados
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories`;
+      const url = getBackendUrl('/api/categories');
       const res = await fetch(url);
 
       if (!res.ok) {
@@ -99,29 +106,31 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
       if (categoriesArray.length > 0) {
         localStorage.setItem("categories", JSON.stringify(categoriesArray));
         setCategories(categoriesArray);
+      } else if (categoriesArray.length === 0 && !categories) {
+        // Si no hay categorías y no hay cache, establecer array vacío
+        setCategories([]);
       }
     } catch (err: any) {
       // Si hay error pero tenemos datos en cache, mantenerlos
       if (!categories) {
-        const cachedCategories = localStorage.getItem("categories");
+        const cachedCategories = getCachedCategories();
         if (cachedCategories) {
-          try {
-            const parsed = JSON.parse(cachedCategories);
-            if (Array.isArray(parsed)) {
-              setCategories(parsed);
-            }
-          } catch (e) {
-            // Ignorar error de parseo
-          }
+          setCategories(cachedCategories);
         }
       }
     }
   };
 
   useEffect(() => {
-    // Cargar datos iniciales
+    // Solo hacer fetch si no hay datos en cache
+    // Si hay datos en cache, ya se establecieron en el estado inicial
+    const hasCachedData = products !== null || categories !== null;
+    
     const loadData = async () => {
-      setLoading(true);
+      // Si no hay datos en cache, mostrar loading
+      if (!hasCachedData) {
+        setLoading(true);
+      }
       setError("");
       try {
         await Promise.all([fetchProducts(), fetchCategories()]);
@@ -133,7 +142,8 @@ export function ProductsProvider({ children }: { children: ReactNode }) {
     };
 
     loadData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Solo ejecutar una vez al montar
 
   const refreshProducts = async () => {
     await fetchProducts();

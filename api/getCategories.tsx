@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState, useMemo } from "react"
 import { CategoryType } from "@/types/category"
 import { ProductsContext } from "@/contexts/products-context"
+import { getBackendUrl } from "@/lib/utils"
 
 export function useGetCategories() {
     // Siempre llamar a los hooks en el mismo orden
     const context = useContext(ProductsContext)
-    const url = useMemo(() => `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories`, [])
+    const url = useMemo(() => getBackendUrl('/api/categories'), [])
     const [result, setResult] = useState<CategoryType[] | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
