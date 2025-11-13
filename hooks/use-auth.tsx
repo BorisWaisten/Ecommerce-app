@@ -46,6 +46,16 @@ export const useAuth = create<AuthStore>()(
             body: JSON.stringify(data),
           });
 
+          // Verificar si la respuesta es JSON antes de parsear
+          const contentType = response.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            throw new Error(
+              response.status === 404 
+                ? 'El servidor no está disponible. Verifica que el backend esté corriendo.'
+                : `El servidor devolvió una respuesta inesperada (${response.status}). Verifica la configuración del backend.`
+            );
+          }
+
           const result = await response.json();
 
           if (!response.ok) {
@@ -69,6 +79,16 @@ export const useAuth = create<AuthStore>()(
           return true;
         } catch (error: any) {
           set({ isLoading: false });
+          
+          // Manejar errores de red
+          if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            toast({
+              title: "Error de conexión",
+              description: "No se pudo conectar con el servidor. Verifica que el backend esté corriendo.",
+              variant: "destructive",
+            });
+            return false;
+          }
           
           // Extraer mensajes específicos de details si están disponibles
           let errorMessage = error.message;
@@ -98,6 +118,16 @@ export const useAuth = create<AuthStore>()(
             body: JSON.stringify(data),
           });
 
+          // Verificar si la respuesta es JSON antes de parsear
+          const contentType = response.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            throw new Error(
+              response.status === 404 
+                ? 'El servidor no está disponible. Verifica que el backend esté corriendo.'
+                : `El servidor devolvió una respuesta inesperada (${response.status}). Verifica la configuración del backend.`
+            );
+          }
+
           const result = await response.json();
 
           if (!response.ok) {
@@ -121,6 +151,16 @@ export const useAuth = create<AuthStore>()(
           return true;
         } catch (error: any) {
           set({ isLoading: false });
+          
+          // Manejar errores de red
+          if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            toast({
+              title: "Error de conexión",
+              description: "No se pudo conectar con el servidor. Verifica que el backend esté corriendo.",
+              variant: "destructive",
+            });
+            return false;
+          }
           
           // Extraer mensajes específicos de details si están disponibles
           let errorMessage = error.message;
@@ -170,6 +210,16 @@ export const useAuth = create<AuthStore>()(
             body: JSON.stringify(data),
           });
 
+          // Verificar si la respuesta es JSON antes de parsear
+          const contentType = response.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            throw new Error(
+              response.status === 404 
+                ? 'El servidor no está disponible. Verifica que el backend esté corriendo.'
+                : `El servidor devolvió una respuesta inesperada (${response.status}). Verifica la configuración del backend.`
+            );
+          }
+
           const result = await response.json();
 
           if (!response.ok) {
@@ -189,6 +239,17 @@ export const useAuth = create<AuthStore>()(
           return true;
         } catch (error: any) {
           set({ isLoading: false });
+          
+          // Manejar errores de red
+          if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            toast({
+              title: "Error de conexión",
+              description: "No se pudo conectar con el servidor. Verifica que el backend esté corriendo.",
+              variant: "destructive",
+            });
+            return false;
+          }
+          
           toast({
             title: "Error al actualizar perfil",
             description: error.message,
@@ -214,9 +275,19 @@ export const useAuth = create<AuthStore>()(
             },
           });
 
+          // Verificar si la respuesta es JSON antes de parsear (solo si hay contenido)
           if (!response.ok) {
-            const result = await response.json();
-            throw new Error(result.error || 'Error al eliminar cuenta');
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+              const result = await response.json();
+              throw new Error(result.error || 'Error al eliminar cuenta');
+            } else {
+              throw new Error(
+                response.status === 404 
+                  ? 'El servidor no está disponible. Verifica que el backend esté corriendo.'
+                  : `Error al eliminar cuenta (${response.status})`
+              );
+            }
           }
 
           set({
@@ -234,6 +305,17 @@ export const useAuth = create<AuthStore>()(
           return true;
         } catch (error: any) {
           set({ isLoading: false });
+          
+          // Manejar errores de red
+          if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            toast({
+              title: "Error de conexión",
+              description: "No se pudo conectar con el servidor. Verifica que el backend esté corriendo.",
+              variant: "destructive",
+            });
+            return false;
+          }
+          
           toast({
             title: "Error al eliminar cuenta",
             description: error.message,

@@ -9,7 +9,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
-import SkeletonSchema from "./skeletonSchema";
 import { ProductType } from "@/types/product";
 import { Card, CardContent } from "./ui/card";
 import { Expand, ShoppingCart, Heart, Star, Zap } from "lucide-react";
@@ -18,10 +17,6 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/use-cart";
 import { useGetProducts } from "@/api/getProducts";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import { CategoryType } from "@/types/category";
-import { useGetCategories } from "@/api/getCategories";
 import { Badge } from "./ui/badge";
 import { formatPrice } from "@/lib/formatPrice";
 import { useState, useEffect } from "react";
@@ -57,11 +52,6 @@ export default function FeaturedProducts() {
   const router = useRouter();
   const { addItem } = useCart();
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-
-  // Debug logs
-  console.log('Featured Products - Loading:', loading);
-  console.log('Featured Products - Result:', result);
-  console.log('Featured Products - Error:', error);
 
   // Auto-play functionality
   useEffect(() => {
