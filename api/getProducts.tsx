@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState, useMemo } from "react"
 import { ProductsContext } from "@/contexts/products-context"
+import { ProductType } from "@/types/product"
 
 export function useGetProducts() {
     // Siempre llamar a los hooks en el mismo orden
     const context = useContext(ProductsContext)
     const url = useMemo(() => `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/products`, [])
-    const [result, setResult] = useState(null)
+    const [result, setResult] = useState<ProductType[] | null>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
 
